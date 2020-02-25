@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 
 /**
- * <h1>同意响应</h1>
+ * <h1>统一响应</h1>
  */
 @RestControllerAdvice
 public class CommonResponseDataAdvice implements ResponseBodyAdvice<Object> {
@@ -45,6 +45,9 @@ public class CommonResponseDataAdvice implements ResponseBodyAdvice<Object> {
         return true;
     }
 
+    /**
+     * <h2>响应返回之前的处理</h2>
+     * */
     @Override
     @SuppressWarnings("all")
     public Object beforeBodyWrite(Object o,
