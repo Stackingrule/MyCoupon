@@ -3,7 +3,7 @@ spring:
     name: coupon-eureka
 
 server:
-  port: 8099
+  port: 8000
 
 eureka:
   instance:
