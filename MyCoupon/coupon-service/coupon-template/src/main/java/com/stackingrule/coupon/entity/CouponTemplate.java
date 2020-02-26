@@ -3,12 +3,13 @@ package com.stackingrule.coupon.entity;
 import com.stackingrule.coupon.constant.CouponCategory;
 import com.stackingrule.coupon.constant.DistributeTarget;
 import com.stackingrule.coupon.constant.ProductLine;
+import com.stackingrule.coupon.converter.CouponCategoryConverter;
+import com.stackingrule.coupon.converter.ProductLineConverter;
+import com.stackingrule.coupon.converter.RuleConverter;
 import com.stackingrule.coupon.vo.TemplateRule;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.UpdateTimestamp;
-import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
@@ -56,10 +57,12 @@ public class CouponTemplate implements Serializable {
 
     /** 优惠券分类 **/
     @Column(name = "category", nullable = false)
+    @Convert(converter = CouponCategoryConverter.class)
     private CouponCategory category;
 
     /** 产品线 **/
     @Column(name = "productLine", nullable = false)
+    @Convert(converter = ProductLineConverter.class)
     private ProductLine productLine;
 
     /** 总数 **/
@@ -85,6 +88,7 @@ public class CouponTemplate implements Serializable {
 
     /** 优惠券规则 **/
     @Column(name = "rule", nullable = false)
+    @Convert(converter = RuleConverter.class)
     private TemplateRule rule;
 
     public CouponTemplate(String name, String logo,
