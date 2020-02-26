@@ -7,11 +7,11 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="coupon-gateway" />
-        <module name="coupon-common" />
-        <module name="coupon-eureka" />
         <module name="untitled" />
+        <module name="coupon-common" />
         <module name="coupon-template" />
+        <module name="coupon-gateway" />
+        <module name="coupon-eureka" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
