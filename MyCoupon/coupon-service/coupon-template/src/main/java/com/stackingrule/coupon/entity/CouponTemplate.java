@@ -1,12 +1,15 @@
 package com.stackingrule.coupon.entity;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.stackingrule.coupon.constant.CouponCategory;
 import com.stackingrule.coupon.constant.DistributeTarget;
 import com.stackingrule.coupon.constant.ProductLine;
 import com.stackingrule.coupon.converter.CouponCategoryConverter;
 import com.stackingrule.coupon.converter.ProductLineConverter;
 import com.stackingrule.coupon.converter.RuleConverter;
+import com.stackingrule.coupon.serialization.CouponTemplateSerialize;
 import com.stackingrule.coupon.vo.TemplateRule;
+import com.sun.corba.se.impl.encoding.CDROutputStream;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -27,6 +30,7 @@ import java.util.Date;
 @Entity
 @EntityListeners(AuditingEntityListener.class)
 @Table(name = "coupon_template")
+@JsonSerialize(using = CouponTemplateSerialize.class)
 public class CouponTemplate implements Serializable {
 
     /** 自增主键 **/
