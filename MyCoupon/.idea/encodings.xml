@@ -3,5 +3,9 @@
   <component name="Encoding">
     <file url="file://$PROJECT_DIR$/coupon-eureka/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/coupon-gateway/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/coupon-service/coupon-common/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/coupon-service/coupon-template/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/coupon-service/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/coupon-service/src/main/resources" charset="UTF-8" />
   </component>
 </project>

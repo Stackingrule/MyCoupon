@@ -2,7 +2,7 @@ package com.stackingrule.coupon.advice;
 
 
 import com.stackingrule.coupon.vo.CommonResponse;
-import com.stackingrule.exception.CouponException;
+import com.stackingrule.coupon.exception.CouponException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 

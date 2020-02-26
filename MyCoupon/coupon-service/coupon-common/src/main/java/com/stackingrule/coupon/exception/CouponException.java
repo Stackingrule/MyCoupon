@@ -1,4 +1,4 @@
-package com.stackingrule.exception;
+package com.stackingrule.coupon.exception;
 
 /**
  * <h1>优惠卷项目通用异常定义</h1>
