@@ -26,7 +26,7 @@ public class TemplateRequest {
     private String desc;
 
     /** 优惠券分类 **/
-    private String categoty;
+    private String category;
 
     /** 产品线 **/
     private Integer productLine;
@@ -51,7 +51,7 @@ public class TemplateRequest {
         boolean stringValid = StringUtils.isNotEmpty(name)
                 && StringUtils.isNotEmpty(logo)
                 && StringUtils.isNotEmpty(desc);
-        boolean enumValid = null != CouponCategory.of(categoty)
+        boolean enumValid = null != CouponCategory.of(category)
                 && null != ProductLine.of(productLine)
                 && null != DistributeTarget.of(target);
         boolean numValid = count > 0 && userId > 0;
