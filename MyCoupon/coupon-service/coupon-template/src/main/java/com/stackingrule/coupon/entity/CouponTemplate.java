@@ -5,11 +5,11 @@ import com.stackingrule.coupon.constant.CouponCategory;
 import com.stackingrule.coupon.constant.DistributeTarget;
 import com.stackingrule.coupon.constant.ProductLine;
 import com.stackingrule.coupon.converter.CouponCategoryConverter;
+import com.stackingrule.coupon.converter.DistributeTargetConverter;
 import com.stackingrule.coupon.converter.ProductLineConverter;
 import com.stackingrule.coupon.converter.RuleConverter;
 import com.stackingrule.coupon.serialization.CouponTemplateSerialize;
 import com.stackingrule.coupon.vo.TemplateRule;
-import com.sun.corba.se.impl.encoding.CDROutputStream;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -88,6 +88,7 @@ public class CouponTemplate implements Serializable {
 
     /** 目标用户 **/
     @Column(name = "target", nullable = false)
+    @Convert(converter = DistributeTargetConverter.class)
     private DistributeTarget target;
 
     /** 优惠券规则 **/

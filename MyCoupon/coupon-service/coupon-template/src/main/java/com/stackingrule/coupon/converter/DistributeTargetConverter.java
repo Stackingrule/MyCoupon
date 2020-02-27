@@ -12,9 +12,11 @@ import javax.persistence.Converter;
 public class DistributeTargetConverter
         implements AttributeConverter<DistributeTarget, Integer> {
 
-
     @Override
     public Integer convertToDatabaseColumn(DistributeTarget distributeTarget) {
+        if (distributeTarget == null) {
+            return null;
+        }
         return distributeTarget.getCode();
     }
 

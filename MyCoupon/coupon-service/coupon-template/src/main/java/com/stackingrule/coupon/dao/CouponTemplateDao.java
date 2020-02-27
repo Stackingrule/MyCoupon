@@ -1,7 +1,6 @@
 package com.stackingrule.coupon.dao;
 
 import com.stackingrule.coupon.entity.CouponTemplate;
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
@@ -26,7 +25,7 @@ public interface CouponTemplateDao
      * @param expired
      * @return
      */
-    List<CouponTemplate> findAllByAvailableAAndExpired(
+    List<CouponTemplate> findAllByAvailableAndExpired(
             Boolean available, Boolean expired
     );
 

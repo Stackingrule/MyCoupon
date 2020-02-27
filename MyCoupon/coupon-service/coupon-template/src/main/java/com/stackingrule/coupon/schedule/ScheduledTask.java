@@ -30,24 +30,26 @@ public class ScheduledTask {
 
     /**
      * <h2>下线已过期的优惠券模板</h2>
-     */
+     * */
     @Scheduled(fixedRate = 60 * 60 * 1000)
     public void offlineCouponTemplate() {
 
-        log.info("Start to Expire CouponTemplate!");
+        log.info("Start To Expire CouponTemplate");
 
-        List<CouponTemplate> templates = templateDao.findAllByExpired(false);
-
+        List<CouponTemplate> templates =
+                templateDao.findAllByExpired(false);
         if (CollectionUtils.isEmpty(templates)) {
-            log.info("Done To Expire CouponTemplate!");
+            log.info("Done To Expire CouponTemplate.");
             return;
         }
 
         Date cur = new Date();
-        List<CouponTemplate> expiredTemplates = new ArrayList<>(templates.size());
+        List<CouponTemplate> expiredTemplates =
+                new ArrayList<>(templates.size());
 
         templates.forEach(t -> {
-            // 根据优惠券模板规则中的过期规则校验模板是否过期
+
+            // 根据优惠券模板规则中的 "过期规则" 校验模板是否过期
             TemplateRule rule = t.getRule();
             if (rule.getExpiration().getDeadLine() < cur.getTime()) {
                 t.setExpired(true);
@@ -56,10 +58,10 @@ public class ScheduledTask {
         });
 
         if (CollectionUtils.isNotEmpty(expiredTemplates)) {
-            log.info("Expired CouponTemplate Num : {}",
+            log.info("Expired CouponTemplate Num: {}",
                     templateDao.saveAll(expiredTemplates));
         }
 
-        log.info("Done To Expire CouponTemplate!");
+        log.info("Done To Expire CouponTemplate.");
     }
 }
