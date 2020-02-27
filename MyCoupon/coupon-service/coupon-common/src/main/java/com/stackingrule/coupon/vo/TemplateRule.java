@@ -31,7 +31,7 @@ public class TemplateRule {
 
     /**
      * <h2>校验功能</h2>
-     * @return
+     * @return boolean
      */
     public boolean validate() {
 
@@ -44,6 +44,9 @@ public class TemplateRule {
     /**
      * <h2>有效期规则</h2>
      */
+    @Data
+    @NoArgsConstructor
+    @AllArgsConstructor
     public static class Expiration {
 
         /** 有效期规则，对应 PeriodType 的 code 字段 **/
@@ -58,6 +61,7 @@ public class TemplateRule {
         boolean validate() {
             return null != PeriodType.of(period) && gap > 0 && deadLine > 0;
         }
+
     }
 
     /**
