@@ -14,12 +14,12 @@ import java.util.stream.Stream;
 public enum DistributeTarget {
 
     SINGLE("单用户", 1),
-    MULTI("多用户", 2),
-    ;
-    /** 分发目标描述**/
+    MULTI("多用户", 2);
+
+    /** 分发目标描述 */
     private String description;
 
-    /** 分发目标分类编码 **/
+    /** 分发目标编码 */
     private Integer code;
 
     public static DistributeTarget of(Integer code) {
@@ -29,6 +29,6 @@ public enum DistributeTarget {
         return Stream.of(values())
                 .filter(bean -> bean.code.equals(code))
                 .findAny()
-                .orElseThrow(() -> new IllegalArgumentException(code+ " not exist!"));
+                .orElseThrow(() -> new IllegalArgumentException(code + " not exists!"));
     }
 }

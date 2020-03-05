@@ -50,7 +50,7 @@ public class BuildTemplateServiceImpl implements IBuildTemplateService {
             throw new CouponException("Exist Same Name Template!");
         }
 
-        // 构造CouponTemplate并存入数据库
+        // 构造 CouponTemplate 并保存到数据库中
         CouponTemplate template = requestToTemplate(request);
         template = templateDao.save(template);
 

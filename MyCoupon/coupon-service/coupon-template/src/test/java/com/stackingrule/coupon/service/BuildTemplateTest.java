@@ -41,6 +41,7 @@ public class BuildTemplateTest {
      * @return
      */
     private TemplateRequest fakeTemplateRequest() {
+
         TemplateRequest request = new TemplateRequest();
         request.setName("优惠券模板-" + new Date().getTime());
         request.setLogo("http://www.imooc.com");

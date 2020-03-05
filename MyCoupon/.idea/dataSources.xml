@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
+    <data-source source="LOCAL" name="coupon_data@localhost" uuid="e845ebcb-7858-4d8e-b182-81182e5877ea">
+      <driver-ref>mysql.8</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mysql://localhost:3306/coupon_data</jdbc-url>
+      <time-zone>UTC</time-zone>
+    </data-source>
+  </component>
+</project>

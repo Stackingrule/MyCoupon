@@ -22,6 +22,10 @@ public class DistributeTargetConverter
 
     @Override
     public DistributeTarget convertToEntityAttribute(Integer code) {
+        if (code == null) {
+            return null;
+        }
         return DistributeTarget.of(code);
     }
 }
+
