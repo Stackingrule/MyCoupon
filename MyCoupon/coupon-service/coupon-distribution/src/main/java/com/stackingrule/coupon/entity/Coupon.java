@@ -1,6 +1,9 @@
 package com.stackingrule.coupon.entity;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.stackingrule.coupon.constant.CouponStatus;
+import com.stackingrule.coupon.converter.CouponStatusConverter;
+import com.stackingrule.coupon.serialization.CouponSerialize;
 import com.stackingrule.coupon.vo.CouponTemplateSDK;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -20,6 +23,7 @@ import java.util.Date;
 @Entity
 @EntityListeners(AuditingEntityListener.class)
 @Table(name = "coupon")
+@JsonSerialize(using = CouponSerialize.class)
 public class Coupon {
 
     /** 自增主键 **/
@@ -46,6 +50,7 @@ public class Coupon {
 
     /** 优惠券状态 **/
     @Column(name = "status", nullable = false)
+    @Convert(converter = CouponStatusConverter.class)
     private CouponStatus status;
 
     /** 用户优惠券对应模板信息 **/
