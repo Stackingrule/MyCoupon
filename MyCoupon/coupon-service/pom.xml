@@ -16,6 +16,7 @@
     <modules>
         <module>coupon-common</module>
         <module>coupon-template</module>
+        <module>coupon-distribution</module>
     </modules>
 
 

@@ -9,6 +9,7 @@
     </option>
     <option name="ignoredFiles">
       <set>
+        <option value="$PROJECT_DIR$/coupon-distribution/pom.xml" />
         <option value="$PROJECT_DIR$/coupon-service/untitled/pom.xml" />
       </set>
     </option>
