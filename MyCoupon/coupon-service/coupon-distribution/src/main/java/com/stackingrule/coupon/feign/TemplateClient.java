@@ -1,5 +1,6 @@
 package com.stackingrule.coupon.feign;
 
+import com.stackingrule.coupon.feign.hystrix.TemplateClientHystrix;
 import com.stackingrule.coupon.vo.CommonResponse;
 import com.stackingrule.coupon.vo.CouponTemplateSDK;
 import org.springframework.cloud.openfeign.FeignClient;
@@ -14,7 +15,8 @@ import java.util.Map;
 /**
  * <h1>优惠券模板微服务 Feign 接口定义</h1>
  */
-@FeignClient(value = "eureka-client-coupon-template")
+@FeignClient(value = "eureka-client-coupon-template",
+    fallback = TemplateClientHystrix.class)
 public interface TemplateClient {
 
     /**
