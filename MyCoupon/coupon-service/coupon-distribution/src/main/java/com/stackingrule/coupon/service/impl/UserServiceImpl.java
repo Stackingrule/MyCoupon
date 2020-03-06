@@ -227,10 +227,78 @@ public class UserServiceImpl implements IUserService {
         return result;
     }
 
+    /**
+     * <h2>用户领取优惠券</h2>
+     * 1. 从 TemplateClient 拿到对应的优惠券, 并检查是否过期
+     * 2. 根据 limitation 判断用户是否可以领取
+     * 3. save to db
+     * 4. 填充 CouponTemplateSDK
+     * 5. save to cache
+     * @param request {@link AcquireTemplateRequest}
+     * @return
+     * @throws CouponException
+     */
     @Override
     public Coupon acquireTemplate(AcquireTemplateRequest request)
             throws CouponException {
-        return null;
+
+        Map<Integer, CouponTemplateSDK> id2Template =
+                templateClient.findIds2TemplateSDK(
+                        Collections.singletonList(
+                                request.getTemplateSDK().getId()
+                        )
+                ).getData();
+
+        // 优惠券模板是需要存在的
+        if (id2Template.size() <= 0) {
+            log.error("Can Not Acquire Template From TemplateClient: {}",
+                    request.getTemplateSDK().getId());
+            throw new CouponException("Can Not Acquire Template From TemplateClient");
+        }
+
+        // 用户是否可以领取这张优惠券
+        List<Coupon> userUsableCoupons = findCouponByStatus(
+                request.getUserId(),
+                CouponStatus.USABLE.getCode());
+        Map<Integer, List<Coupon>> templateId2Coupons = userUsableCoupons
+                .stream().collect(Collectors.groupingBy(Coupon::getTemplateId));
+
+        if (templateId2Coupons.containsKey(request.getTemplateSDK().getId())
+                && templateId2Coupons.get(request.getTemplateSDK().getId()).size() >=
+                request.getTemplateSDK().getRule().getLimitation()) {
+            log.error("Exceed Template Assign Limitation: {}",
+                    request.getTemplateSDK().getId());
+            throw new CouponException("Exceed Template Assign Limitation");
+        }
+
+        // 尝试去获取优惠券码
+        String couponCode = redisService.tryToAcquireCouponCodeFromCache(
+                request.getTemplateSDK().getId()
+        );
+
+        if (StringUtils.isEmpty(couponCode)) {
+            log.error("Can Not Acquire Coupon Code: {}",
+                    request.getTemplateSDK().getId());
+            throw new CouponException("Can Not Acquire Coupon Code");
+        }
+
+        Coupon newCoupon = new Coupon(
+                request.getTemplateSDK().getId(), request.getUserId(),
+                couponCode, CouponStatus.USABLE
+        );
+        newCoupon = couponDao.save(newCoupon);
+
+        // 填充 Coupon 对象的 CouponTemplateSDK, 一定要在放入缓存之前去填充
+        newCoupon.setTemplateSDK(request.getTemplateSDK());
+
+        // 放入缓存中
+        redisService.addCouponToCache(
+                request.getUserId(),
+                Collections.singletonList(newCoupon),
+                CouponStatus.USABLE.getCode()
+        );
+
+        return newCoupon;
     }
 
     @Override
