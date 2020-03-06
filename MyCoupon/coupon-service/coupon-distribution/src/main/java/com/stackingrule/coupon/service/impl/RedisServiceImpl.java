@@ -42,7 +42,7 @@ public class RedisServiceImpl implements IRedisService {
      * @return {@link Coupon}s, 注意, 可能会返回 null, 代表从没有过记录
      */
     @Override
-    public List<Coupon> getCacheCoupons(Long userId, Integer status) {
+    public List<Coupon> getCachedCoupons(Long userId, Integer status) {
 
         log.info("Get Coupons From Cache: {}, {}", userId,status);
 
@@ -147,6 +147,7 @@ public class RedisServiceImpl implements IRedisService {
                 result = addCouponToCacheForUsable(userId, coupons);
                 break;
             case USED:
+                result = addCouponToCacheForUsed(userId, coupons);
                 break;
             case EXPIRED:
                 break;
@@ -186,6 +187,98 @@ public class RedisServiceImpl implements IRedisService {
         );
 
         return needCachedObject.size();
+    }
+
+
+    /**
+     * <h2>将已使用的优惠券加入到 Cache 中</h2>
+     * @param userId 用户 id
+     * @param coupons {@link Coupon}
+     * @return
+     * @throws CouponException
+     */
+    @SuppressWarnings("all")
+    private Integer addCouponToCacheForUsed(Long userId, List<Coupon> coupons)
+            throws CouponException {
+        // 如果 status 是 USED, 代表用户操作是使用当前的优惠券, 影响到两个 Cache
+        // USABLE, USED
+
+        log.debug("Add Coupon To Cache For Used.");
+
+        Map<String, String> needCachedForUsed = new HashMap<>(coupons.size());
+
+        String redisKeyForUsable = status2RedisKey(
+                CouponStatus.USABLE.getCode(), userId
+        );
+        String redisKeyForUsed = status2RedisKey(
+                CouponStatus.USED.getCode(), userId
+        );
+
+        // 获取当前用户可用优惠券
+        List<Coupon> curUsableCoupons = getCachedCoupons(
+                userId, CouponStatus.USABLE.getCode()
+        );
+
+        // 当前可用的优惠券个数一定是大于1的
+        assert curUsableCoupons.size() > coupons.size();
+
+        coupons.forEach(c -> needCachedForUsed.put(
+                c.getId().toString(),
+                JSON.toJSONString(c)
+        ));
+
+        // 校验当前的优惠券参数是否与 Cached 中的匹配
+        List<Integer> curUsableIds = curUsableCoupons.stream()
+                .map(Coupon::getId)
+                .collect(Collectors.toList());
+        List<Integer> paramIds = coupons.stream()
+                .map(Coupon::getId)
+                .collect(Collectors.toList());
+
+        if (!CollectionUtils.isSubCollection(paramIds, curUsableIds)) {
+            log.error("CurCoupons Is Not Equal ToCache: {}, {}, {}",
+                    userId,
+                    JSON.toJSONString(curUsableIds),
+                    JSON.toJSONString(paramIds));
+            throw new CouponException("CurCoupons Is Not Equal To Cache!");
+        }
+
+        List<String> needCleanKey = paramIds.stream()
+                .map(i -> i.toString()).collect(Collectors.toList());
+        SessionCallback<Objects> sessionCallback = new SessionCallback<Objects>() {
+            @Override
+            public Objects execute(RedisOperations redisOperations) throws DataAccessException {
+
+                // 1. 已使用优惠券 cache 缓存
+                redisOperations.opsForHash().putAll(
+                        redisKeyForUsed, needCachedForUsed
+                );
+
+                // 2. 可用优惠券 cache 清理
+                redisOperations.opsForHash().delete(
+                        redisKeyForUsable, needCleanKey.toArray()
+                );
+                // 3. 重置过期时间
+                redisOperations.expire(
+                        redisKeyForUsable,
+                        getRandomExpirationTime(1, 2),
+                        TimeUnit.SECONDS
+                );
+                redisOperations.expire(
+                        redisKeyForUsed,
+                        getRandomExpirationTime(1, 2),
+                        TimeUnit.SECONDS
+                );
+                return null;
+            }
+        };
+
+        log.info("Pipeline Exe Result: {}",
+                JSON.toJSONString(
+                        redisTemplate.executePipelined(sessionCallback)));
+
+        return coupons.size();
+
     }
 
 

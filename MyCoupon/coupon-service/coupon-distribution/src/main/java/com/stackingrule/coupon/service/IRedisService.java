@@ -18,7 +18,7 @@ public interface IRedisService {
      * @param status 优惠券状态 {@link com.stackingrule.coupon.constant.CouponStatus}
      * @return {@link Coupon}s, 注意, 可能会返回 null, 代表从没有过记录
      */
-    List<Coupon> getCacheCoupons(Long userId, Integer status);
+    List<Coupon> getCachedCoupons(Long userId, Integer status);
 
 
     /**
