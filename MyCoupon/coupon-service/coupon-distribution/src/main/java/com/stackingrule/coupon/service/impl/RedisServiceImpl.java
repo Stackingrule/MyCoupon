@@ -8,6 +8,7 @@ import com.stackingrule.coupon.exception.CouponException;
 import com.stackingrule.coupon.service.IRedisService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.RandomUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.data.redis.core.RedisOperations;
@@ -102,14 +103,53 @@ public class RedisServiceImpl implements IRedisService {
 
     }
 
+
+    /**
+     * <h2>尝试从 Cache 中获取一个优惠券码</h2>
+     * @param templateId 优惠券模板主键
+     * @return 优惠券码
+     */
     @Override
     public String tryToAcquireCouponCodeFromCache(Integer templateId) {
-        return null;
+
+        String redisKey = String.format("%s%s",
+                Constant.RedisPrefix.COUPON_TEMPLATE, templateId.toString());
+        // 因为优惠券码不存在顺序关系, 左边 pop 或右边 pop, 没有影响
+        String couponCode = redisTemplate.opsForList().leftPop(redisKey);
+
+        log.info("Acquire Coupon Code: {}, {}, {}",
+                templateId, redisKey, couponCode);
+
+        return couponCode;
     }
 
+
+    /**
+     * <h2>将优惠券保存到 Cache 中</h2>
+     * @param userId 用户 id
+     * @param coupons {@link Coupon}s
+     * @param status 优惠券状态
+     * @return status  优惠券状态
+     * @throws CouponException
+     */
     @Override
-    public Integer addCouponToCache(Long userId, List<Coupon> coupons, Integer status) throws CouponException {
-        return null;
+    public Integer addCouponToCache(Long userId, List<Coupon> coupons,
+                                    Integer status) throws CouponException {
+        log.info("Add Coupon To Cache: {}, {}, {}",
+                userId, JSON.toJSONString(coupons), status);
+
+        Integer result = -1;
+        CouponStatus couponStatus = CouponStatus.of(status);
+
+        switch (couponStatus) {
+            case USABLE:
+                break;
+            case USED:
+                break;
+            case EXPIRED:
+                break;
+        }
+        return result;
     }
 
     /**
@@ -136,6 +176,22 @@ public class RedisServiceImpl implements IRedisService {
         }
 
         return redisKey;
+    }
+
+
+    /**
+     * <h2>获取一个随机的过期时间</h2>
+     * 缓存雪崩: key 在同一时间失效
+     * @param min 最小的小时数
+     * @param max 最大的小时数
+     * @return 返回 [min, max] 之间的随机秒数
+     */
+    private Long getRandomExpirationTime(Integer min, Integer max) {
+
+        return RandomUtils.nextLong(
+                min * 60 * 60,
+                max * 60 * 60
+        );
     }
 
 }
