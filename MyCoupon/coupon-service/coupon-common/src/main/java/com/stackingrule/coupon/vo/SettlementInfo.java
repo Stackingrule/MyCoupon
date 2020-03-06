@@ -28,6 +28,9 @@ public class SettlementInfo {
     /** 优惠券列表 **/
     private List<CouponAndTemplateInfo> couponAndTemplateInfos;
 
+    /** 是否使结算生效 （即核销）**/
+    private Boolean employ;
+
     /** 结果结算金额 **/
     private Double cost;
 
