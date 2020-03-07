@@ -24,8 +24,8 @@ public class CouponTemplateSDK {
     /** 优惠券描述 **/
     private String desc;
 
-    /** 优惠券分类 **/
-    private String code;
+    /** 优惠券分类 */
+    private String category;
 
     /** 产品线 **/
     private Integer productLine;
@@ -38,5 +38,6 @@ public class CouponTemplateSDK {
 
     /** 优惠券规则 **/
     private TemplateRule rule;
+
 
 }
