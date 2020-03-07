@@ -11,7 +11,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.persistence.criteria.CriteriaBuilder;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -41,6 +40,7 @@ public class CouponTemplateController {
     /**
      * <h2>构建优惠券模板</h2>
      *  127.0.0.1:7001/coupon-template/template/build
+     *  127.0.0.1:9000/imooc/coupon-template/template/build
      * @param request {@link TemplateRequest}
      * @return {@link CouponTemplate}
      * @throws CouponException

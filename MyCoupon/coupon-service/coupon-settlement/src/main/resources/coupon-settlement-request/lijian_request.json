@@ -1,0 +1,45 @@
+{
+  "cost": 0.0,
+  "couponAndTemplateInfos": [
+    {
+      "id": 1,
+      "template": {
+        "category": "003",
+        "id": 3,
+        "key": "100320190906",
+        "rule": {
+          "discount": {
+            "base": 1,
+            "quota": 5
+          },
+          "expiration": {
+            "deadline": 1568083278958,
+            "gap": 1,
+            "period": 2
+          },
+          "limitation": 1,
+          "usage": {
+            "city": "桐城市",
+            "goodsType": "[1,3]",
+            "province": "安徽省"
+          },
+          "weight": "[]"
+        }
+      }
+    }
+  ],
+  "employ": false,
+  "goodsInfos": [
+    {
+      "count": 2,
+      "price": 10.88,
+      "type": 1
+    },
+    {
+      "count": 10,
+      "price": 20.88,
+      "type": 1
+    }
+  ],
+  "userId": 20001
+}

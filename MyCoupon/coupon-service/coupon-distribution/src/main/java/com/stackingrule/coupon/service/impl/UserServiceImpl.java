@@ -179,7 +179,7 @@ public class UserServiceImpl implements IUserService {
         // 过滤过期的优惠券模板
         templateSDKS.stream().filter(
                 t -> t.getRule().getExpiration()
-                        .getDeadLine() > curTime)
+                        .getDeadline() > curTime)
                 .collect(Collectors.toList()
                 );
 

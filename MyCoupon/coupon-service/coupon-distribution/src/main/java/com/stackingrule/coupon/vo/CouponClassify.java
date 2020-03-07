@@ -47,7 +47,7 @@ public class CouponClassify {
             if (c.getTemplateSDK().getRule().getExpiration()
                     .getPeriod().equals(PeriodType.REGULAR.getCode())) {
                 isTimeExpired = c.getTemplateSDK()
-                        .getRule().getExpiration().getDeadLine() <= curTime;
+                        .getRule().getExpiration().getDeadline() <= curTime;
             } else {
                 isTimeExpired = DateUtils.addDays(
                         c.getAssignTime(),

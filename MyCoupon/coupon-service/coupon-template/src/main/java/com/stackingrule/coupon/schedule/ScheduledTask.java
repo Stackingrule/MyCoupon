@@ -51,7 +51,7 @@ public class ScheduledTask {
 
             // 根据优惠券模板规则中的 "过期规则" 校验模板是否过期
             TemplateRule rule = t.getRule();
-            if (rule.getExpiration().getDeadLine() < cur.getTime()) {
+            if (rule.getExpiration().getDeadline() < cur.getTime()) {
                 t.setExpired(true);
                 expiredTemplates.add(t);
             }
