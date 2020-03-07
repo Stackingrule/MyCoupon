@@ -41,8 +41,7 @@
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
-            <version>5.1.47</version>
-            <scope>runtime</scope>
+            <version>8.0.16</version>
         </dependency>
         <!-- 通用模块 -->
         <dependency>
