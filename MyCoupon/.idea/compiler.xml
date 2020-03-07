@@ -9,9 +9,10 @@
         <outputRelativeToContentRoot value="true" />
         <module name="coupon-eureka" />
         <module name="coupon-template" />
+        <module name="coupon-common" />
         <module name="coupon-distribution" />
         <module name="coupon-gateway" />
-        <module name="coupon-common" />
+        <module name="coupon-settlement" />
         <module name="untitled" />
       </profile>
     </annotationProcessing>
@@ -26,6 +27,7 @@
       <module name="coupon-eureka" options="-parameters" />
       <module name="coupon-gateway" options="-parameters" />
       <module name="coupon-service" options="-parameters" />
+      <module name="coupon-settlement" options="-parameters" />
       <module name="coupon-template" options="-parameters" />
       <module name="untitled" options="-parameters" />
     </option>

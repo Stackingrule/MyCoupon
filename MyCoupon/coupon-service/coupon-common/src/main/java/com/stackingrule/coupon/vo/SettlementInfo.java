@@ -46,7 +46,7 @@ public class SettlementInfo {
         private Integer id;
 
         /** 优惠券对应的模板 **/
-        private CouponTemplateSDK templateSDK;
+        private CouponTemplateSDK template;
 
     }
 
