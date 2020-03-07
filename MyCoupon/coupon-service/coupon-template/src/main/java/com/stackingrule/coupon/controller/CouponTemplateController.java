@@ -80,6 +80,7 @@ public class CouponTemplateController {
     /**
      * <h2>获取模板 ids 到 CouponTemplateSDK 的映射</h2>
      * 127.0.0.1:7001/coupon-template/template/sdk/infos
+     * 127.0.0.1:9000/imooc/coupon-template/template/sdk/infos?ids=1,2
      * @param ids
      * @return
      */
